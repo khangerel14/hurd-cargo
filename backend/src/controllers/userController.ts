@@ -1,79 +1,55 @@
 import { Request, Response } from 'express';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import User from '../models/User';
+import jwt from 'jsonwebtoken';
 
 // Create User
-export const createUser = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const { phoneNumber, password, role, name } = req.body;
-  try {
-    const existingUser = await User.findOne({ phoneNumber });
-    if (existingUser) {
-      res.status(400).json({ message: 'Phone number already exists' });
-      return;
-    }
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({
-      phoneNumber,
-      password: hashedPassword,
-      role,
-      name,
+const SECRET_KEY = process.env.JWT_SECRET ?? 'secret';
+
+export const loginOrSignUp = async (req: Request, res: Response) => {
+  const { phoneNumber, role } = req.body;
+
+  if (!phoneNumber || !role) {
+    return res.status(400).json({
+      status: 400,
+      message: 'Phone number and role are required.',
     });
-    await user.save();
-    res.status(201).json({
-      data: {
-        message: 'User created',
-        role: user.role,
-        name: user.name,
-        user: { id: user._id, phoneNumber, role, name },
-      },
-    });
-  } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
   }
-};
 
-// Login User
-export const login = async (req: Request, res: Response): Promise<void> => {
-  const { phoneNumber, password } = req.body;
   try {
-    const user = await User.findOne({ phoneNumber });
+    let user = await User.findOne({ phoneNumber });
+
     if (!user) {
-      res.status(401).json({ message: 'Invalid phone number or password' });
-      return;
+      try {
+        user = await User.create({ phoneNumber, role });
+        console.log('User created');
+      } catch (err: any) {
+        if (err.code === 11000) {
+          user = await User.findOne({ phoneNumber });
+          console.log('User found after duplicate error');
+        } else {
+          throw err;
+        }
+      }
+    } else {
+      console.log('User logged in');
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      res.status(401).json({ message: 'Invalid phone number or password' });
-      return;
-    }
+    const token = jwt.sign({ id: user?.id, role: user?.role }, SECRET_KEY, {
+      expiresIn: '7d',
+    });
 
-    const token = jwt.sign(
-      { id: user._id, role: user.role },
-      process.env.JWT_SECRET ?? 'your_jwt_secret',
-      { expiresIn: '1h' }
-    );
-
-    res.json({
-      data: {
-        message: 'Login successful',
-        token,
-        role: user.role,
-        name: user.name,
-        user: {
-          id: user._id,
-          phoneNumber: user.phoneNumber,
-          role: user.role,
-          name: user.name,
-        },
-      },
+    return res.status(200).json({
+      status: 200,
+      message: 'Login or signup successful',
+      user,
+      token,
     });
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
+    return res.status(500).json({
+      status: 500,
+      message: 'Server error',
+      error,
+    });
   }
 };
 
@@ -109,7 +85,7 @@ export const updateUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { phoneNumber, password, role, name } = req.body;
+  const { phoneNumber, role } = req.body;
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
@@ -117,9 +93,7 @@ export const updateUser = async (
       return;
     }
     if (phoneNumber) user.phoneNumber = phoneNumber;
-    if (password) user.password = await bcrypt.hash(password, 10);
     if (role) user.role = role;
-    if (name) user.name = name;
     await user.save();
     res.json({
       message: 'User updated',
@@ -127,7 +101,6 @@ export const updateUser = async (
         id: user._id,
         phoneNumber: user.phoneNumber,
         role: user.role,
-        name: user.name,
       },
     });
   } catch (error) {

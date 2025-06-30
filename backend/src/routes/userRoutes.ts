@@ -1,35 +1,15 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { body, validationResult, query } from 'express-validator';
+import { validationResult, query } from 'express-validator';
 import {
-  createUser,
-  login,
   getUsers,
-  getUserById,
   updateUser,
   deleteUser,
+  loginOrSignUp,
+  getUserById,
   getUserByPhoneNumber,
 } from '../controllers/userController';
 
 const router = express.Router();
-
-router.post(
-  '/login',
-  [
-    body('phoneNumber')
-      .isString()
-      .notEmpty()
-      .withMessage('Phone number is required'),
-    body('password').isString().notEmpty().withMessage('Password is required'),
-  ],
-  (req: Request, res: Response, next: NextFunction) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      res.status(400).json({ errors: errors.array() });
-      return;
-    }
-    login(req, res);
-  }
-);
 
 router.get(
   '/user',
@@ -49,8 +29,10 @@ router.get(
   }
 );
 
+// Create or login user
+router.post('/auth', loginOrSignUp);
+
 // General routes
-router.post('/', createUser);
 router.get('/', getUsers);
 
 // Parameterized routes last

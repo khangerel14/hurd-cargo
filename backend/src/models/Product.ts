@@ -16,6 +16,7 @@ const productSchema = new mongoose.Schema(
       ],
       default: 'arrived_in_ereen',
     },
+    isPaid: { type: Boolean, default: false },
     pickupType: {
       type: String,
       enum: ['pickup', 'delivery'],
