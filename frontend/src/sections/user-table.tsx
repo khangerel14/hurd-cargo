@@ -184,7 +184,7 @@ export function UserTable({ phoneNumber }: Props) {
                     </TableCell>
                   </>
                 ) : (
-                  <TableCell colSpan={6} className='text-center'>
+                  <TableCell colSpan={8} className='text-center'>
                     No tracking code available
                   </TableCell>
                 )}

@@ -15,25 +15,25 @@ export const NavbarSection = ({ scrollToSection, call, address }: Props) => {
     <section
       className='bg-no-repeat bg-cover bg-center min-h-[600px]'
       style={{
-        backgroundImage: "url('/images/red.avif')",
+        backgroundImage: "url('/images/poster.jpg')",
         mixBlendMode: 'multiply',
       }}
     >
       <div className='container mx-auto flex justify-between items-center p-4'>
         <div>
-          <button className='font-bold text-[#aa8f68] text-2xl cursor-pointer'>
+          <button className='font-bold text-[#ffffff] text-2xl cursor-pointer'>
             Хурд карго
           </button>
         </div>
         <div className='flex flex-row gap-7 items-center'>
           <button
-            className='cursor-pointer text-white max-sm:hidden'
+            className='cursor-pointer text-white font-normal max-sm:hidden'
             onClick={() => scrollToSection(address)}
           >
             Хаяг холбох
           </button>
           <button
-            className='cursor-pointer text-white max-sm:hidden'
+            className='cursor-pointer text-white font-normal max-sm:hidden'
             onClick={() => scrollToSection(call)}
           >
             Холбоо барих
@@ -48,12 +48,12 @@ export const NavbarSection = ({ scrollToSection, call, address }: Props) => {
       </div>
 
       {/* Hero Section */}
-      <div className='max-w-[900px] mx-auto h-[400px] flex items-center justify-center text-center px-4 text-[#aa8f68]'>
+      {/* <div className='max-w-[900px] mx-auto h-[400px] flex items-center justify-center text-center px-4 text-[#ffffff]'>
         <h2 className='font-bold tracking-normal text-2xl md:text-6xl leading-snug'>
           Хурд карго, Хурдан, Шуурхай,{' '}
-          <span className='text-[#28857a] italic'>Найдвартай</span>
+          <span className='italic'>Найдвартай</span>
         </h2>
-      </div>
+      </div> */}
     </section>
   );
 };
