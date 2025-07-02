@@ -22,6 +22,7 @@ import { changeStatus } from '@/utils/change-status';
 import { useState } from 'react';
 import { Product } from '@/types/product';
 import { STATUS } from '@/types/common';
+import { Switch } from '@/components/ui/switch';
 
 type Props = Readonly<{
   row: Product;
@@ -35,6 +36,7 @@ interface FormData {
   phoneNumber: string;
   status: string;
   price: number;
+  isPaid: boolean;
 }
 
 export function EditDialog({
@@ -48,6 +50,7 @@ export function EditDialog({
     phoneNumber: row.phoneNumber ?? '',
     status: row.status ?? '',
     price: row.price ?? 0,
+    isPaid: row.isPaid ?? false,
   });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -113,7 +116,7 @@ export function EditDialog({
 
       fetchData?.();
       handleSearch?.(phoneNumber ?? '');
-      setOpen(false); // Close dialog on success
+      setOpen(false);
     } catch (error) {
       console.error('Error updating product:', error);
       setError((error as Error).message || 'Failed to update product.');
@@ -192,6 +195,17 @@ export function EditDialog({
               className='border-gray-300'
               min='0'
             />
+          </div>
+          <div className='flex items-center gap-2'>
+            <Switch
+              checked={formData.isPaid}
+              onCheckedChange={(checked) =>
+                setFormData((prev) => ({ ...prev, isPaid: checked }))
+              }
+            />
+            <label htmlFor='isPaid' className='ml-2 text-sm text-gray-700'>
+              Төлбөр төлөгдсөн эсэх
+            </label>
           </div>
         </div>
         <DialogFooter>
