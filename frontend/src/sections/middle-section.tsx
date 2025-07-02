@@ -13,7 +13,7 @@ export const MiddleSection = () => {
           <Card className='bg-white p-7 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300'>
             <div className='flex flex-row justify-start items-center gap-5'>
               <Image
-                src='/images/profile.jpg'
+                src='/images/profile.jpeg'
                 alt='image'
                 width={60}
                 height={60}
@@ -23,11 +23,11 @@ export const MiddleSection = () => {
             </div>
             <p className='text-gray-500 mt-1'>
               Хурд карго үүсгэн байгуулагч Э.Энхтуул миний бие 11 жил тээвэр
-              логистикийн салбарт ажилласан тул тээврийн салбарын туршлага
-              дээрээ тулгуурлан БНХАУ ын Эрээн хотоос Улаанбаатар хотын
-              хоорондох тээврийн үйлчилгээг хурдан шуурхай нийлүүлэх харилцагч
-              бүртэй найрсаг харилцаа, уян хатан үнийн бодлого үэргийг гол
-              зорилгоо болгон ажиллаж байна.
+              логистикийн салбарт ажилласан тээврийн салбарын туршлага дээрээ
+              тулгуурлан БНХАУ ын Эрээн хотоос Улаанбаатар хотын хоорондох
+              тээврийн үйлчилгээг хурдан шуурхай нийлүүлэх харилцагч бүртэй
+              найрсаг харилцаа, уян хатан үнийн бодлого үэргийг гол зорилгоо
+              болгон ажиллаж байна.
             </p>
           </Card>
           <Card className='bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300'>
