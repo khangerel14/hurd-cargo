@@ -89,8 +89,18 @@ export const updateProduct = async (
   res: Response
 ): Promise<void> => {
   const { id } = req.params;
-  const { name, trackingCode, phoneNumber, status, pickupType, user, price } =
-    req.body;
+  const {
+    name,
+    trackingCode,
+    phoneNumber,
+    status,
+    pickupType,
+    user,
+    price,
+    isPaid,
+  } = req.body;
+
+  console.log(req.body);
 
   try {
     const product = await Product.findById(id);
@@ -106,6 +116,7 @@ export const updateProduct = async (
     if (pickupType) product.pickupType = pickupType;
     if (user) product.user = user;
     if (price) product.price = price;
+    if (typeof isPaid !== 'undefined') product.isPaid = isPaid;
 
     await product.save();
     res.json({
