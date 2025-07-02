@@ -100,8 +100,6 @@ export const updateProduct = async (
     isPaid,
   } = req.body;
 
-  console.log(req.body);
-
   try {
     const product = await Product.findById(id);
     if (!product) {
