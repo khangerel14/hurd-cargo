@@ -26,8 +26,8 @@ type Props = Readonly<{
 
 const translations = {
   loading: 'Ачаалалж байна...',
-  totalItems: 'Нийтэй бараа',
-  totalAmount: 'Нийтэй дүн',
+  totalItems: 'Нийт бараа',
+  totalAmount: 'Нийлбэр дүн',
   invalidPhone: 'Утасны дугаар оруулна уу.',
 };
 
