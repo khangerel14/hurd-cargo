@@ -54,7 +54,7 @@ export function ArchivedTable({ phoneNumber, userRole }: Props) {
     } finally {
       setLoading(false);
     }
-  }, [phoneNumber]);
+  }, [phoneNumber, userRole]);
 
   useEffect(() => {
     fetchData();
@@ -105,7 +105,9 @@ export function ArchivedTable({ phoneNumber, userRole }: Props) {
             <TableHead>Хүлээж авах</TableHead>
             <TableHead>Утасны дугаар</TableHead>
             <TableHead>Дүн</TableHead>
-            <TableHead className='text-right'>Үйлдэл</TableHead>
+            {userRole === ROLE.ADMIN && (
+              <TableHead className='text-right'>Үйлдэл</TableHead>
+            )}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -131,15 +133,17 @@ export function ArchivedTable({ phoneNumber, userRole }: Props) {
                   <TableCell>
                     {data.price ? `${data.price} ₮` : 'Дүн оруулаагүй байна'}
                   </TableCell>
-                  <TableCell className='flex items-center justify-end gap-2'>
-                    <Button
-                      color='error'
-                      variant='outline'
-                      onClick={() => handleDelete({ id: data._id })}
-                    >
-                      Устгах
-                    </Button>
-                  </TableCell>
+                  {userRole === ROLE.ADMIN && (
+                    <TableCell className='flex items-center justify-end gap-2'>
+                      <Button
+                        color='error'
+                        variant='outline'
+                        onClick={() => handleDelete({ id: data._id })}
+                      >
+                        Устгах
+                      </Button>
+                    </TableCell>
+                  )}
                 </>
               ) : (
                 <TableCell colSpan={6} className='text-center'>

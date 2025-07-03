@@ -3,9 +3,9 @@ import { STATUS } from '@/types/common';
 export const changeStatus = (status: string) => {
   switch (status) {
     case STATUS.ARRIVED_IN_EREEN:
-      return 'Эрээн дэхь агуулхад ирсэн';
+      return 'Эрээн дэхь агуулахад ирсэн';
     case STATUS.SHIPPED_TO_ULAANBAATAR:
-      return 'Улаанбаатарлуу ачигдсан';
+      return 'Улаанбаатар руу  ачигдсан';
     case STATUS.ARRIVED_IN_ULAANBAATAR:
       return 'Улаанбаатарт ирсэн';
     case STATUS.ACTION_OF_DEVIVERY:
