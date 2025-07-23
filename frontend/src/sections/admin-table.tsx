@@ -112,7 +112,7 @@ export function AdminTable() {
   return (
     <Card className='w-full max-w-[1300px] p-6 bg-white shadow-md'>
       <div className='w-full flex justify-between flex-col sm:flex-row gap-5'>
-        <div className='flex items-center gap-2'>
+        <div className='flex items-center gap-3'>
           <p>
             {translations.totalItems}: {sumNumber}
           </p>
