@@ -19,6 +19,7 @@ import { toast } from 'react-toastify';
 import { Product } from '@/types/product';
 import { PICKUP_TYPE, STATUS } from '@/types/common';
 import { UserStatusDialog } from './user-status-dialog';
+import { BankDialog } from './bank-dialog';
 
 type Props = Readonly<{
   phoneNumber: string;
@@ -123,7 +124,10 @@ export function UserTable({ phoneNumber }: Props) {
 
   return (
     <Card className='w-full max-w-[1300px] p-6 bg-white shadow-md'>
-      <UserStatusDialog setStatus={setStatus} status={status} />
+      <div className='flex justify-between items-center mb-4'>
+        <UserStatusDialog setStatus={setStatus} status={status} />
+        <BankDialog />
+      </div>
       <div className='flex justify-between flex-col sm:flex-row my-5 gap-5'>
         <div className='flex items-center gap-5'>
           <p>
