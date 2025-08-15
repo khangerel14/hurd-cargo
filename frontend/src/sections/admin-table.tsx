@@ -15,7 +15,7 @@ import { Badge } from '@/components/ui/badge';
 import { useRouter } from 'next/navigation';
 import { Card } from '@/components/ui/card';
 import dayjs from 'dayjs';
-import { PICKUP_TYPE, STATUS } from '@/types/common';
+import { STATUS } from '@/types/common';
 import { EditDialog } from './edit-dialog';
 import { Product } from '@/types/product';
 import { ProductDialog } from './product-dialog';
@@ -133,7 +133,6 @@ export function AdminTable() {
             <TableHead>№</TableHead>
             <TableHead className='w-[100px]'>Трак код</TableHead>
             <TableHead>Төлөв</TableHead>
-            <TableHead>Хүлээж авах</TableHead>
             <TableHead>Утасны дугаар</TableHead>
             <TableHead>Дүн</TableHead>
             <TableHead>Төлбөр</TableHead>
@@ -156,11 +155,6 @@ export function AdminTable() {
                       <Badge variant='secondary'>
                         {changeStatus(data.status)}
                       </Badge>
-                    </TableCell>
-                    <TableCell>
-                      {data.pickupType === PICKUP_TYPE.PICKUP
-                        ? 'Очиж авах'
-                        : 'Хүргүүлж авах'}
                     </TableCell>
                     <TableCell>{data.phoneNumber}</TableCell>
                     <TableCell>

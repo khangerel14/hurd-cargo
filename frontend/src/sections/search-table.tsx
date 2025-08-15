@@ -17,7 +17,7 @@ import { EditDialog } from './edit-dialog';
 import { Card } from '@/components/ui/card';
 import dayjs from 'dayjs';
 import { Product } from '@/types/product';
-import { PICKUP_TYPE, STATUS } from '@/types/common';
+import { STATUS } from '@/types/common';
 import { UpdateProductDialog } from './update-product-dialog';
 
 const translations = {
@@ -196,7 +196,6 @@ export function SearchTable() {
               <TableHead>№</TableHead>
               <TableHead className='w-[100px]'>Трак код</TableHead>
               <TableHead>Төлөв</TableHead>
-              <TableHead>Хүлээж авах</TableHead>
               <TableHead>Утасны дугаар</TableHead>
               <TableHead>Дүн</TableHead>
               <TableHead>Огноо</TableHead>
@@ -223,11 +222,6 @@ export function SearchTable() {
                       <Badge variant='secondary'>
                         {changeStatus(data.status)}
                       </Badge>
-                    </TableCell>
-                    <TableCell>
-                      {data.pickupType === PICKUP_TYPE.PICKUP
-                        ? 'Очиж авах'
-                        : 'Хүргүүлж авах'}
                     </TableCell>
                     <TableCell>{data.phoneNumber}</TableCell>
                     <TableCell>

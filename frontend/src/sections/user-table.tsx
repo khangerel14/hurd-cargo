@@ -11,13 +11,11 @@ import {
 import { useCallback, useEffect, useState } from 'react';
 import { changeIsPaid, changeStatus } from '@/utils/change-status';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import dayjs from 'dayjs';
 
-import { toast } from 'react-toastify';
 import { Product } from '@/types/product';
-import { PICKUP_TYPE, STATUS } from '@/types/common';
+import { STATUS } from '@/types/common';
 import { UserStatusDialog } from './user-status-dialog';
 import { BankDialog } from './bank-dialog';
 
@@ -71,32 +69,32 @@ export function UserTable({ phoneNumber }: Props) {
     }
   }, [phoneNumber, status]);
 
-  const handlePickUp = async ({ phone }: { phone: string }) => {
-    try {
-      const url = `${process.env.NEXT_PUBLIC_API_URL}/api/products/put-products`;
-      const response = await fetch(url, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          phoneNumber: phone,
-          pickupType:
-            userData?.[0]?.pickupType === 'pickup'
-              ? PICKUP_TYPE.DELIVERY
-              : PICKUP_TYPE.PICKUP,
-        }),
-      });
+  // const handlePickUp = async ({ phone }: { phone: string }) => {
+  //   try {
+  //     const url = `${process.env.NEXT_PUBLIC_API_URL}/api/products/put-products`;
+  //     const response = await fetch(url, {
+  //       method: 'PUT',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         phoneNumber: phone,
+  //         pickupType:
+  //           userData?.[0]?.pickupType === 'pickup'
+  //             ? PICKUP_TYPE.DELIVERY
+  //             : PICKUP_TYPE.PICKUP,
+  //       }),
+  //     });
 
-      const data = await response.json();
+  //     const data = await response.json();
 
-      toast(data.message);
-      fetchData();
-    } catch (error) {
-      console.error('Error updating pickup type:', error);
-      setError('Failed to update pickup type');
-    }
-  };
+  //     toast(data.message);
+  //     fetchData();
+  //   } catch (error) {
+  //     console.error('Error updating pickup type:', error);
+  //     setError('Failed to update pickup type');
+  //   }
+  // };
 
   useEffect(() => {
     fetchData();
@@ -137,14 +135,6 @@ export function UserTable({ phoneNumber }: Props) {
             {translations.totalAmount}: {sum} ₮
           </p>
         </div>
-        <Button
-          variant='outline'
-          onClick={() => handlePickUp({ phone: phoneNumber })}
-        >
-          {userData[0].pickupType === PICKUP_TYPE.PICKUP
-            ? 'Хүргүүлж авах болгох'
-            : 'Очиж авах болгох'}
-        </Button>
       </div>
       <Table aria-label='User products table'>
         <TableHeader>
@@ -152,7 +142,6 @@ export function UserTable({ phoneNumber }: Props) {
             <TableHead>№</TableHead>
             <TableHead className='w-[100px]'>Трак код</TableHead>
             <TableHead>Төлөв</TableHead>
-            <TableHead>Хүлээж авах</TableHead>
             <TableHead>Утасны дугаар</TableHead>
             <TableHead>Дүн</TableHead>
             <TableHead>Төлбөр</TableHead>
@@ -172,11 +161,6 @@ export function UserTable({ phoneNumber }: Props) {
                     </TableCell>
                     <TableCell>
                       <Badge>{changeStatus(data.status)}</Badge>
-                    </TableCell>
-                    <TableCell>
-                      {data.pickupType === PICKUP_TYPE.PICKUP
-                        ? 'Очиж авах'
-                        : 'Хүргүүлж авах'}
                     </TableCell>
                     <TableCell>{data.phoneNumber}</TableCell>
                     <TableCell>

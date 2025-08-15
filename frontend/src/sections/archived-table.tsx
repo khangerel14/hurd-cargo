@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { Product } from '@/types/product';
-import { PICKUP_TYPE, ROLE, STATUS } from '@/types/common';
+import { ROLE, STATUS } from '@/types/common';
 
 type Props = Readonly<{
   phoneNumber: string;
@@ -102,7 +102,6 @@ export function ArchivedTable({ phoneNumber, userRole }: Props) {
             <TableHead>№</TableHead>
             <TableHead className='w-[100px]'>Трак код</TableHead>
             <TableHead>Төлөв</TableHead>
-            <TableHead>Хүлээж авах</TableHead>
             <TableHead>Утасны дугаар</TableHead>
             <TableHead>Дүн</TableHead>
             {userRole === ROLE.ADMIN && (
@@ -123,11 +122,6 @@ export function ArchivedTable({ phoneNumber, userRole }: Props) {
                     <Badge variant='secondary'>
                       {changeStatus(data.status)}
                     </Badge>
-                  </TableCell>
-                  <TableCell>
-                    {data.pickupType === PICKUP_TYPE.PICKUP
-                      ? 'Очиж авах'
-                      : 'Хүргүүлж авах'}
                   </TableCell>
                   <TableCell>{data.phoneNumber}</TableCell>
                   <TableCell>
