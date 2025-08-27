@@ -11,6 +11,7 @@ import {
   getProductsByStatusAdmin,
   updateProductsByPhoneNumber,
   updateProductsStatus,
+  searchArchivedProducts,
 } from '../controllers/productController';
 
 const router = express.Router();
@@ -69,6 +70,9 @@ router.put('/update-status', updateProductsStatus);
 // Get Product by status
 router.get('/status', getProductsByStatus);
 router.get('/status/admin', getProductsByStatusAdmin);
+
+// Search archived products by phone number and tracking code
+router.get('/archived/search', searchArchivedProducts);
 
 router.get('/user/home', getProductsByUserNumber);
 

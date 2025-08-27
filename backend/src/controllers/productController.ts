@@ -279,3 +279,44 @@ export const updateProductsStatus = async (req: Request, res: Response) => {
       .json({ message: 'Server error', error: (error as Error).message });
   }
 };
+
+// Search archived products by phone number and tracking code
+export const searchArchivedProducts = async (req: Request, res: Response) => {
+  try {
+    const { phoneNumber, trackingCode, userRole } = req.query;
+
+    let query: any = { status: 'handed_over' };
+
+    // For users, they can only search their own products
+    if (userRole === 'user' && phoneNumber) {
+      query.phoneNumber = phoneNumber;
+    }
+
+    // Add search conditions for phone number and tracking code
+    if (phoneNumber || trackingCode) {
+      query.$or = [];
+      if (phoneNumber) {
+        query.$or.push({ phoneNumber: { $regex: phoneNumber, $options: 'i' } });
+      }
+      if (trackingCode) {
+        query.$or.push({
+          trackingCode: { $regex: trackingCode, $options: 'i' },
+        });
+      }
+    }
+
+    const products = await Product.find(query).sort({ updatedAt: -1 });
+
+    if (products.length === 0) {
+      res.status(404).json({ message: 'No archived products found' });
+      return;
+    }
+
+    res.json(products);
+  } catch (error) {
+    console.error('Error searching archived products:', error);
+    res
+      .status(500)
+      .json({ message: 'Server error', error: (error as Error).message });
+  }
+};
