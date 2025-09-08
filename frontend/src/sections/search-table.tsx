@@ -42,11 +42,6 @@ export function SearchTable() {
   };
 
   const handleSearch = async ({ phoneNumber }: { phoneNumber?: string }) => {
-    if (!phoneNumber || !/^\d+$/.test(phoneNumber)) {
-      setUserData([]);
-      return;
-    }
-
     setLoading(true);
     setError(null);
     try {
