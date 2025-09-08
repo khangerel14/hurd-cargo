@@ -3,24 +3,24 @@ import Product from '../models/Product';
 
 // Run every day at midnight (00:00)
 cron.schedule('0 0 * * *', async () => {
-  const oneMonthAgo = new Date();
-  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1); // subtract 1 month
+  const fourteenDaysAgo = new Date();
+  fourteenDaysAgo.setDate(fourteenDaysAgo.getDate() - 14); // subtract 14 days
 
   console.log(
-    `[CRON] Checking for products handed over before ${oneMonthAgo.toISOString()}`
+    `[CRON] Checking for products handed over before ${fourteenDaysAgo.toISOString()}`
   );
 
   try {
     const outdated = await Product.find({
       status: 'handed_over',
-      updatedAt: { $lt: oneMonthAgo },
+      updatedAt: { $lt: fourteenDaysAgo },
     });
 
     console.log(`[CRON] Found ${outdated.length} products to delete`);
 
     const result = await Product.deleteMany({
       status: 'handed_over',
-      updatedAt: { $lt: oneMonthAgo },
+      updatedAt: { $lt: fourteenDaysAgo },
     });
 
     console.log(`[CRON] Deleted ${result.deletedCount} products`);
